@@ -14,9 +14,9 @@
   }
 
  .hero {
-    position: center;
-    height: 100vh; /* full screen height */
-    overflow: hidden;
+  position: relative;      /* was: position: center; */
+  height: 100vh;
+  overflow: hidden;
 }
 
 .hero img {
@@ -127,26 +127,34 @@
 
 <script>
   const heroImage = document.getElementById('heroImage');
-  const heroText = document.getElementById('heroText');
+  const heroText  = document.getElementById('heroText');
   const menuSection = document.getElementById('menuSection');
 
-  window.addEventListener('scroll', () => {
-    let scrollY = window.scrollY;
+  // give the hero a visible title (change to your cafe name)
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!heroText.textContent.trim()) {
+      heroText.textContent = 'Your Café Name';
+    }
+  });
 
-    // Zoom out effect
-    let scale = 1 + scrollY / 1000;
+  function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+  window.addEventListener('scroll', () => {
+    const h = window.innerHeight;
+    const progress = clamp(window.scrollY / h, 0, 1); // 0→1 over first viewport
+    // Zoom OUT from 1 → 0.85
+    const scale = clamp(1 - progress * 0.15, 0.85, 1);
     heroImage.style.transform = `scale(${scale})`;
 
-    // Fade text
-    let opacity = Math.max(1 - scrollY / 300, 0);
-    heroText.style.opacity = opacity;
+    // Fade title out as you scroll
+    heroText.style.opacity = String(1 - progress);
 
-    // Show menu when hero is mostly scrolled away
-    if (scrollY > window.innerHeight * 0.6) {
-      menuSection.style.opacity = 1;
+    // Reveal categories once past ~60% of the hero
+    if (progress > 0.6) {
+      menuSection.style.opacity = '1';
       menuSection.style.transform = 'translateY(0)';
     } else {
-      menuSection.style.opacity = 0;
+      menuSection.style.opacity = '0';
       menuSection.style.transform = 'translateY(50px)';
     }
   });

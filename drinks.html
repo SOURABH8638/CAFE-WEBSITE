@@ -8,9 +8,7 @@
   body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    background: url('https://www.transparenttextures.com/patterns/coffee-bg.png'),
-                linear-gradient(#f5e0c3, #e0c097);
-    background-size: auto, cover;
+    background: linear-gradient(#3e2723, #1b100d);
     color: #3e2723;
   }
   header {
@@ -20,21 +18,56 @@
     text-align: center;
     font-size: 1.5rem;
   }
-  .menu {
-    max-width: 600px;
-    margin: auto;
-    padding: 1rem;
+  header a {
+    font-size: 0.8rem;
+    color: #ffd8b1;
+    text-decoration: none;
   }
+ .menu {
+  max-width: 500px;
+  margin: auto;
+  padding: 1rem;
+  overflow-y: auto;
+  height: calc(100vh - 80px);
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
   .item {
     background: #fff3e0;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
-  a {
+  .item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+  .info {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .name {
+    font-weight: bold;
+  }
+  .price {
+    color: #4e342e;
+  }
+  .add-btn {
+    background: #ff9800;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
     color: white;
-    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .add-btn:hover {
+    background: #e68900;
   }
 </style>
 </head>
@@ -42,16 +75,51 @@
 
 <header>
   ☕ Drinks Menu
-  <div style="font-size:0.8rem;"><a href="index.html">← Back to Main Menu</a></div>
+  <div><a href="index.html">← Back to Main Menu</a></div>
 </header>
 
 <div class="menu">
-  <div class="item">Espresso - $2.50</div>
-  <div class="item">Cappuccino - $3.00</div>
-  <div class="item">Latte - $3.50</div>
-  <div class="item">Americano - $2.80</div>
-  <div class="item">Mocha - $3.20</div>
+  <div class="item">
+    <img src="hot-coffee.png" alt="Hot Coffee">
+    <div class="info">
+      <div>
+        <div class="name">Hot Coffee</div>
+        <div class="price">₹210</div>
+      </div>
+      <button class="add-btn" onclick="addToCart(210)">Add</button>
+    </div>
+  </div>
+
+  <div class="item">
+    <img src="cold-coffee-1.jpg" alt="Cold Coffee">
+    <div class="info">
+      <div>
+        <div class="name">Cold Coffee</div>
+        <div class="price">₹250</div>
+      </div>
+      <button class="add-btn" onclick="addToCart(250)">Add</button>
+    </div>
+  </div>
+
+  <div class="item">
+    <img src="hot-chocolate.jpg" alt="Hot Chocolate">
+    <div class="info">
+      <div>
+        <div class="name">Hot Chocolate</div>
+        <div class="price">₹280</div>
+      </div>
+      <button class="add-btn" onclick="addToCart(280)">Add</button>
+    </div>
+  </div>
 </div>
+
+<script>
+  let total = 0;
+  function addToCart(price) {
+    total += price;
+    alert("Item added! Current total: ₹" + total);
+  }
+</script>
 
 </body>
 </html>
