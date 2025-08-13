@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Café Menu</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5e0c3;
+    color: #3e2723;
+    overflow-x: hidden;
+  }
+
+ .hero {
+    position: center;
+    height: 100vh; /* full screen height */
+    overflow: hidden;
+}
+
+.hero img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fill the screen */
+    object-position: center 35%; /* Adjust so logo is centered vertically */
+    transform: scale(1);
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+}
+
+
+
+
+  .hero-text {
+    position: absolute;
+    bottom: 20%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.3s ease-out;
+  }
+
+  /* Menu Section */
+  .menu {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .category {
+    background: #fff3e0;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  .category:hover {
+    background: #ffe0b2;
+    transform: translateY(-5px);
+  }
+
+  .category img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .category-name {
+    padding: 15px;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero">
+  <img src="nature of coffee cafe.jpg" alt="" id="heroImage">
+  <div class="hero-text" id="heroText"></div>
+</section>
+
+<!-- Menu Categories -->
+<div class="menu" id="menuSection">
+  <a href="coffee.html">
+    <div class="category">
+      <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800" alt="Coffee">
+      <div class="category-name">Coffee</div>
+    </div>
+  </a>
+  <a href="snacks.html">
+    <div class="category">
+      <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800" alt="Snacks">
+      <div class="category-name">Snacks</div>
+    </div>
+  </a>
+  <a href="drinks.html">
+    <div class="category">
+      <img src="https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?w=800" alt="Drinks">
+      <div class="category-name">Drinks</div>
+    </div>
+  </a>
+</div>
+
+<script>
+  const heroImage = document.getElementById('heroImage');
+  const heroText = document.getElementById('heroText');
+  const menuSection = document.getElementById('menuSection');
+
+  window.addEventListener('scroll', () => {
+    let scrollY = window.scrollY;
+
+    // Zoom out effect
+    let scale = 1 + scrollY / 1000;
+    heroImage.style.transform = `scale(${scale})`;
+
+    // Fade text
+    let opacity = Math.max(1 - scrollY / 300, 0);
+    heroText.style.opacity = opacity;
+
+    // Show menu when hero is mostly scrolled away
+    if (scrollY > window.innerHeight * 0.6) {
+      menuSection.style.opacity = 1;
+      menuSection.style.transform = 'translateY(0)';
+    } else {
+      menuSection.style.opacity = 0;
+      menuSection.style.transform = 'translateY(50px)';
+    }
+  });
+</script>
+
+</body>
+</html>
