@@ -23,16 +23,15 @@
     color: #ffd8b1;
     text-decoration: none;
   }
- .menu {
-  max-width: 500px;
-  margin: auto;
-  padding: 1rem;
-  overflow-y: auto;
-  height: calc(100vh - 80px);
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-}
-
+  .menu {
+    max-width: 500px;
+    margin: auto;
+    padding: 1rem;
+    overflow-y: auto;
+    height: calc(100vh - 80px);
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
   .item {
     background: #fff3e0;
     margin-bottom: 15px;
@@ -86,7 +85,7 @@
         <div class="name">Hot Coffee</div>
         <div class="price">₹210</div>
       </div>
-      <button class="add-btn" onclick="addToCart(210)">Add</button>
+      <button class="add-btn" onclick="addToCart('Hot Coffee', 210, 'hot-coffee.png')">Add</button>
     </div>
   </div>
 
@@ -97,7 +96,7 @@
         <div class="name">Cold Coffee</div>
         <div class="price">₹250</div>
       </div>
-      <button class="add-btn" onclick="addToCart(250)">Add</button>
+      <button class="add-btn" onclick="addToCart('Cold Coffee', 250, 'cold-coffee-1.jpg')">Add</button>
     </div>
   </div>
 
@@ -108,16 +107,17 @@
         <div class="name">Hot Chocolate</div>
         <div class="price">₹280</div>
       </div>
-      <button class="add-btn" onclick="addToCart(280)">Add</button>
+      <button class="add-btn" onclick="addToCart('Hot Chocolate', 280, 'hot-chocolate.jpg')">Add</button>
     </div>
   </div>
 </div>
 
 <script>
-  let total = 0;
-  function addToCart(price) {
-    total += price;
-    alert("Item added! Current total: ₹" + total);
+  function addToCart(name, price, image) {
+    let order = JSON.parse(localStorage.getItem('orderItems')) || [];
+    order.push({ name, price, image, quantity: 1 });
+    localStorage.setItem('orderItems', JSON.stringify(order));
+    window.location.href = "ourorder.html";
   }
 </script>
 

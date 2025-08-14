@@ -10,33 +10,45 @@
     margin: 0;
     background: linear-gradient(#3e2723, #1b100d);
     color: #3e2723;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
+
+  /* Header */
   header {
     background-color: #6f4e37;
     color: white;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     text-align: center;
-    font-size: 1.5rem;
   }
-  header a {
-    font-size: 0.8rem;
+  .header-title {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+  }
+  .back-link {
+    font-size: 0.85rem;
     color: #ffd8b1;
     text-decoration: none;
   }
+  .back-link:hover { text-decoration: underline; }
+
+  /* Menu */
   .menu {
     max-width: 500px;
     margin: auto;
     padding: 1rem;
-    overflow-y: auto;
-    height: calc(100vh - 80px);
+    flex: 1;
   }
   .item {
     background: #fff3e0;
     margin-bottom: 15px;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease;
   }
+  .item:hover { transform: translateY(-3px); }
   .item img {
     width: 100%;
     height: 250px;
@@ -48,12 +60,8 @@
     justify-content: space-between;
     align-items: center;
   }
-  .name {
-    font-weight: bold;
-  }
-  .price {
-    color: #4e342e;
-  }
+  .name { font-weight: bold; }
+  .price { color: #4e342e; }
   .add-btn {
     background: #ff9800;
     border: none;
@@ -62,17 +70,35 @@
     color: white;
     cursor: pointer;
     font-size: 0.9rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   }
-  .add-btn:hover {
-    background: #e68900;
+  .add-btn:hover { background: #e68900; }
+
+  /* Footer button */
+  .footer {
+    background: #6f4e37;
+    padding: 0.8rem;
+    text-align: center;
   }
+  .order-btn {
+    background: #ffcc80;
+    color: #4e342e;
+    padding: 10px 18px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    display: inline-block;
+    transition: background 0.3s ease;
+  }
+  .order-btn:hover { background: #ffb74d; }
 </style>
 </head>
 <body>
 
 <header>
-  ☕ Coffee Menu
-  <div><a href="index.html">← Back to Main Menu</a></div>
+  <div class="header-title">☕ Coffee Menu</div>
+  <div><a href="index.html" class="back-link">← Back to Main Menu</a></div>
 </header>
 
 <div class="menu">
@@ -83,7 +109,7 @@
         <div class="name">Hot Coffee</div>
         <div class="price">₹210</div>
       </div>
-      <button class="add-btn" onclick="addToCart(210)">Add</button>
+      <button class="add-btn" onclick="addToCart('Hot Coffee', 210, 'hot-coffee.png')">Add</button>
     </div>
   </div>
 
@@ -94,7 +120,7 @@
         <div class="name">Cold Coffee</div>
         <div class="price">₹250</div>
       </div>
-      <button class="add-btn" onclick="addToCart(250)">Add</button>
+      <button class="add-btn" onclick="addToCart('Cold Coffee', 250, 'cold-coffee-1.jpg')">Add</button>
     </div>
   </div>
 
@@ -105,16 +131,31 @@
         <div class="name">Hot Chocolate</div>
         <div class="price">₹280</div>
       </div>
-      <button class="add-btn" onclick="addToCart(280)">Add</button>
+      <button class="add-btn" onclick="addToCart('Hot Chocolate', 280, 'hot-chocolate.jpg')">Add</button>
     </div>
   </div>
 </div>
 
+<!-- Footer with Our Order button -->
+<footer class="footer">
+  <a href="ourorder.html" class="order-btn">🛒 Our Order</a>
+</footer>
+
 <script>
-  let total = 0;
-  function addToCart(price) {
-    total += price;
-    alert("Item added! Current total: ₹" + total);
+  function addToCart(name, price, image) {
+    const item = { name, price, image, qty: 1 };
+    const cart = JSON.parse(localStorage.getItem('orderItems')) || [];
+
+
+    const existing = cart.find(i => i.name === name);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push(item);
+    }
+
+    localStorage.setItem('orderItems', JSON.stringify(cart));
+    window.location.href = 'ourorder.html';
   }
 </script>
 
